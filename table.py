@@ -107,26 +107,5 @@ class Table_row:
 
 
 
-class Customers_column(Table_column):
-    def __init__(self):
-        self.primary_key_name = ['id']
-        self.foreign_key_name = ['name']
-        self.id = []
-        self.name = []
-        self.age = []
-        super().__init__('customer')
 
-"""
-customers = Customers_column()
-customers.add(["002", "Yasmine", "24"])
-customers.add(["007", "Romin", "77"])
-customers.add(["000", "Oumaima", "5"])
-customers.add(["001", "Louay", "18"])
-customers.dump_column()
-"""
-
-customers = Customers_column()
-customers.add(["111", "Hubert", "55"])
-customers.add(["222", "Jean", "1"])
-customers.dump_column()
 

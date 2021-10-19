@@ -36,4 +36,5 @@ class Part_row(Table_row):
     def __init__(self):
         self.primary_key_name = ['partkey']
         self.foreign_key_name = []
+
         super().__init__(Part, 'PART')
