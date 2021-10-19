@@ -14,7 +14,6 @@ class PartSupp_column(Table_column):
         super().__init__('PART')
 
 
-
 class PartSupp(Row):
     def __init__(self, values):
         self.partkey = None
