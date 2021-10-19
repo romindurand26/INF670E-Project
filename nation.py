@@ -1,0 +1,31 @@
+from table import Table_column, Table_row, Row
+
+
+class Nation_column(Table_column):
+    def __init__(self):
+        self.primary_key_name = ['nationkey']
+        self.foreign_key_name = ['regionkey']
+        self.nationkey = []
+        self.name = []
+        self.regionkey = []
+        self.comment = []
+
+        super().__init__('NATION')
+
+
+class Nation(Row):
+    def __init__(self, values):
+        self.nationkey = None
+        self.name = None
+        self.regionkey = None
+        self.comment = None
+
+        super().__init__(values)
+
+
+class Nation_row(Table_row):
+    def __init__(self):
+        self.primary_key_name = ['nationkey']
+        self.foreign_key_name = ['regionkey']
+
+        super().__init__(Nation, 'NATION')
