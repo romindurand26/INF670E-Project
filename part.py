@@ -32,7 +32,7 @@ class Part(Row):
         super().__init__(values)
 
 
-class Customers_row(Table_row):
+class Part_row(Table_row):
     def __init__(self):
         self.primary_key_name = ['partkey']
         self.foreign_key_name = []
