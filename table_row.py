@@ -1,4 +1,9 @@
 import json
+import copy
+import os
+
+
+DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data analytics/INF670E-Project/disk_storage_row/'
 
 
 # row version
@@ -10,28 +15,39 @@ class Row:
 
 
 class Table_row:
-    def __init__(self, file, class_row):
-        self.primary_key_name = None
+    def __init__(self, class_row, name_table='universal_table'):
         self.class_row = class_row
+        self.name_table = name_table
+        self.disk = DISK_STORAGE_ROW + self.name_table + '_row.txt'
         self.rows = []
-        self.__load(file)
+
+        self.__check_disk()
+        self.__load()
+
+    def __check_disk(self):
+        if not os.path.isfile(self.disk):
+            self.dump_row()
 
     def add(self, values):
         self.rows.append(self.class_row(values))
 
-    def dump_row(self, file):
+    def dump_row(self):
         list_row = []
         for r in self.rows:
             dict_r = r.__dict__
             list_row.append(dict_r)
 
-        dict = {"primary_key_name": self.primary_key_name, "rows": list_row}
+        dict_dump = copy.deepcopy(self.__dict__)
+        del dict_dump['class_row']
+        del dict_dump['name_table']
+        del dict_dump['disk']
+        dict_dump['rows'] = list_row
 
-        with open(file, 'w') as json_file:
-            json.dump(dict, json_file)
+        with open(self.disk, 'w') as json_file:
+            json.dump(dict_dump, json_file)
 
-    def __load(self, file):
-        with open(file, 'r') as json_file:
+    def __load(self):
+        with open(self.disk, 'r') as json_file:
             data = json.load(json_file)
         setattr(self, "primary_key_name", data["primary_key_name"])
 
@@ -53,14 +69,22 @@ class Customer(Row):
 
 
 class Customers_row(Table_row):
-    def __init__(self, file):
-        super().__init__(file, Customer)
+    def __init__(self):
+        self.primary_key_name = 'id'
+        super().__init__(Customer, 'customer')
 
+"""
+customers = Customers_row()
+customers.add(["002", "Yasmine", "24"])
+customers.add(["007", "Romin", "77"])
+customers.add(["000", "Oumaima", "5"])
+customers.add(["001", "Louay", "18"])
+customers.dump_row()
 
-file1 = "/home/romin/Documents/M2 Data Science/Systems for big data analytics/INF670E-Project/json_row.txt"
-customers = Customers_row(file1)
+"""
+
+customers = Customers_row()
 customers.add(["111", "Hubert", "55"])
 customers.add(["222", "Jean", "1"])
+customers.dump_row()
 
-file2 = "/home/romin/Documents/M2 Data Science/Systems for big data analytics/INF670E-Project/json_row2.txt"
-customers.dump_row(file2)

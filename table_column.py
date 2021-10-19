@@ -13,10 +13,11 @@ class Table_column:
     def __init__(self, name_table='universal_table'):
         self.name_table = name_table
         self.disk = DISK_STORAGE_COLUMN + self.name_table + '_column.txt'
-        self.check_disk()
+
+        self.__check_disk()
         self.__load()
 
-    def check_disk(self):
+    def __check_disk(self):
         if not os.path.isfile(self.disk):
             self.dump_column()
 
@@ -29,16 +30,16 @@ class Table_column:
 
     def add(self, values):
         dict_table = copy.deepcopy(self.__dict__)
-        del dict_table['disk']
         del dict_table['name_table']
+        del dict_table['disk']
         del dict_table['primary_key_name']
         for attribute, val in zip(dict_table.keys(), values):
             getattr(self, attribute).append(val)
 
     def dump_column(self):
         dict_dump = copy.deepcopy(self.__dict__)
-        del dict_dump['disk']
         del dict_dump['name_table']
+        del dict_dump['disk']
 
         with open(self.disk, 'w') as json_file:
             json.dump(dict_dump, json_file)
