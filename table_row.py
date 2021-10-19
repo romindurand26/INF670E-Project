@@ -8,6 +8,7 @@ DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data a
 
 # row version
 
+
 class Row:
     def __init__(self, values):
         for attribute, val in zip(self.__dict__.keys(), values):
@@ -50,6 +51,7 @@ class Table_row:
         with open(self.disk, 'r') as json_file:
             data = json.load(json_file)
         setattr(self, "primary_key_name", data["primary_key_name"])
+        setattr(self, "foreign_key_name", data["foreign_key_name"])
 
         rows = data["rows"]
         for data_row in rows:
@@ -70,10 +72,11 @@ class Customer(Row):
 
 class Customers_row(Table_row):
     def __init__(self):
-        self.primary_key_name = 'id'
+        self.primary_key_name = ['id']
+        self.foreign_key_name = ['name']
         super().__init__(Customer, 'customer')
 
-"""
+
 customers = Customers_row()
 customers.add(["002", "Yasmine", "24"])
 customers.add(["007", "Romin", "77"])
@@ -87,4 +90,4 @@ customers = Customers_row()
 customers.add(["111", "Hubert", "55"])
 customers.add(["222", "Jean", "1"])
 customers.dump_row()
-
+"""
