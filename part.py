@@ -17,7 +17,6 @@ class Part_column(Table_column):
         super().__init__('PART')
 
 
-
 class Part(Row):
     def __init__(self, values):
         self.partkey = None

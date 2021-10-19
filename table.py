@@ -3,8 +3,10 @@ import copy
 import os
 
 
-DISK_STORAGE_COLUMN = '/home/romin/Documents/M2 Data Science/Systems for big data analytics/INF670E-Project/disk_storage_column/'
-DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data analytics/INF670E-Project/disk_storage_row/'
+DISK_STORAGE_COLUMN = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
+                      'analytics/INF670E-Project/disk_storage_column/ '
+DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
+                   'analytics/INF670E-Project/disk_storage_row/ '
 
 
 # column version
@@ -47,7 +49,7 @@ class Table_column:
             json.dump(dict_dump, json_file)
 
     def to_row(self):
-        new_table = Table_row()
+        pass
 
 
 # row version
@@ -104,3 +106,6 @@ class Table_row:
 
         with open(self.disk, 'w') as json_file:
             json.dump(dict_dump, json_file)
+
+    def to_column(self):
+        pass

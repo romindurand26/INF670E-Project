@@ -16,7 +16,6 @@ class Supplier_column(Table_column):
         super().__init__('SUPPLIER')
 
 
-
 class Supplier(Row):
     def __init__(self, values):
         self.suppkey = None
