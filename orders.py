@@ -37,4 +37,4 @@ class Orders_row(Table_row):
     def __init__(self):
         self.primary_key_name = ['orderkey']
         self.foreign_key_name = ['custkey']
-        super().__init__(Customer, 'ORDERS')
+        super().__init__(Orders, 'ORDERS')

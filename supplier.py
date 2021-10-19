@@ -35,4 +35,4 @@ class Supplier_row(Table_row):
         self.primary_key_name = ['suppkey']
         self.foreign_key_name = ['nationkey']
 
-        super().__init__(Part, 'SUPPLIER')
+        super().__init__(Supplier, 'SUPPLIER')
