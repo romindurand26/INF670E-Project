@@ -49,6 +49,7 @@ class Table_column:
     def to_row(self):
         new_table = Table_row()
 
+
 # row version
 
 
@@ -72,6 +73,20 @@ class Table_row:
         if not os.path.isfile(self.disk):
             self.dump_row()
 
+    def __load(self):
+        with open(self.disk, 'r') as json_file:
+            data = json.load(json_file)
+        setattr(self, "primary_key_name", data["primary_key_name"])
+        setattr(self, "foreign_key_name", data["foreign_key_name"])
+
+        rows = data["rows"]
+        for data_row in rows:
+            values = []
+            for attribute in data_row.keys():
+                values.append(data_row[attribute])
+            row = self.class_row(values)
+            self.rows.append(row)
+
     def add(self, values):
         self.rows.append(self.class_row(values))
 
@@ -89,23 +104,3 @@ class Table_row:
 
         with open(self.disk, 'w') as json_file:
             json.dump(dict_dump, json_file)
-
-    def __load(self):
-        with open(self.disk, 'r') as json_file:
-            data = json.load(json_file)
-        setattr(self, "primary_key_name", data["primary_key_name"])
-        setattr(self, "foreign_key_name", data["foreign_key_name"])
-
-        rows = data["rows"]
-        for data_row in rows:
-            values = []
-            for attribute in data_row.keys():
-                values.append(data_row[attribute])
-            row = self.class_row(values)
-            self.rows.append(row)
-
-
-
-
-
-
