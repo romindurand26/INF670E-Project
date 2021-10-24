@@ -9,7 +9,7 @@ class Customers_column(Table_column):
         self.name = []
         self.age = []
 
-        super().__init__('customer')
+        super().__init__(Customers_row, 'customer')
 
 
 class Customer(Row):
@@ -25,7 +25,7 @@ class Customers_row(Table_row):
     def __init__(self):
         self.primary_key_name = ['id']
         self.foreign_key_name = ['name']
-        super().__init__(Customer, 'customer')
+        super().__init__(Customers_column, Customer, 'customer')
 
 
 storage = 'column'

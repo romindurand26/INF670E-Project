@@ -1,1 +1,0 @@
-{"primary_key_name": ["nationkey"], "foreign_key_name": ["regionkey"], "rows": [{"nationkey": 45, "name": "France", "regionkey": 5, "comment": "hhygyguut"}]}

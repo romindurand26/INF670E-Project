@@ -1,0 +1,1 @@
+{"primary_key_name": ["suppkey"], "foreign_key_name": ["nationkey"], "suppkey": [], "name": [], "address": [], "nationkey": [], "phone": [], "acctbal": [], "comment": []}
