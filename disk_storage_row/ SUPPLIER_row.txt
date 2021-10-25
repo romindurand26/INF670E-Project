@@ -1,1 +1,0 @@
-{"primary_key_name": ["suppkey"], "foreign_key_name": ["nationkey"], "rows": [{"suppkey": 486, "name": "drtctrd", "address": "hvgvgv", "nationkey": "hhygyguut", "phone": "hhygyguut", "acctbal": "hhygyguut", "comment": "hhygyguut"}]}
