@@ -28,7 +28,7 @@ class Customers_row(Table_row):
         super().__init__(Customers_column, Customer, 'customer')
 
 
-storage = 'column'
+storage = 'row'
 show = 2
 
 if storage == 'row':

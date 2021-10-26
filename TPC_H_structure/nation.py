@@ -29,7 +29,3 @@ class Nation_row(Table_row):
         self.foreign_key_name = ['regionkey']
 
         super().__init__(Nation_column, Nation, 'NATION')
-
-n = Nation_row()
-n.add([45, 'France', 5, 'hhygyguut'])
-n.dump_row()

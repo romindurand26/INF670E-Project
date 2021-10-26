@@ -35,9 +35,3 @@ class Supplier_row(Table_row):
         self.foreign_key_name = ['nationkey']
 
         super().__init__(Supplier_column, Supplier, 'SUPPLIER')
-
-
-s = Supplier_column()
-s.add([486, 'drtctrd', 'hvgvgv', 'hhygyguut', 'hhygyguut', 'hhygyguut', 'hhygyguut'])
-s_c = s.to_row()
-s_c.dump_row()

@@ -9,7 +9,7 @@ class Region_column(Table_column):
         self.name = []
         self.comment = []
 
-        super().__init__(Region_row, 'NATION')
+        super().__init__(Region_row, 'REGION')
 
 
 class Region(Row):

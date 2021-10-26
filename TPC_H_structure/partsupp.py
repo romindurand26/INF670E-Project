@@ -11,7 +11,7 @@ class PartSupp_column(Table_column):
         self.supplycost = []
         self.comment = []
 
-        super().__init__(PartSupp_row, 'PART')
+        super().__init__(PartSupp_row, 'PARTSUPP')
 
 
 class PartSupp(Row):
