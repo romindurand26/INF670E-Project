@@ -2,7 +2,6 @@ import json
 import copy
 import os
 
-
 DISK_STORAGE_COLUMN = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
                       'analytics/INF670E-Project/disk_storage_column/ '
 DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
@@ -13,7 +12,8 @@ DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data '
 
 
 class Table_column:
-    def __init__(self, name_table='universal_table'):
+    def __init__(self, row_version, name_table='universal_table'):
+        self.row_version = row_version
         self.name_table = name_table
         self.disk = DISK_STORAGE_COLUMN + self.name_table + '_column.txt'
 
@@ -33,15 +33,19 @@ class Table_column:
 
     def add(self, values):
         dict_table = copy.deepcopy(self.__dict__)
+        del dict_table['row_version']
         del dict_table['name_table']
         del dict_table['disk']
+
         del dict_table['primary_key_name']
         del dict_table['foreign_key_name']
+
         for attribute, val in zip(dict_table.keys(), values):
             getattr(self, attribute).append(val)
 
     def dump_column(self):
         dict_dump = copy.deepcopy(self.__dict__)
+        del dict_dump['row_version']
         del dict_dump['name_table']
         del dict_dump['disk']
 
@@ -49,7 +53,25 @@ class Table_column:
             json.dump(dict_dump, json_file)
 
     def to_row(self):
-        pass
+        t_row = self.row_version()
+        dict_table = copy.deepcopy(self.__dict__)
+        del dict_table['row_version']
+        del dict_table['name_table']
+        del dict_table['disk']
+
+        del dict_table['primary_key_name']
+        del dict_table['foreign_key_name']
+
+        for attribute in dict_table.keys():
+            n = len(getattr(self, attribute))
+
+        for i in range(n):
+            values = []
+            for attribute in dict_table.keys():
+                values.append(getattr(self, attribute)[i])
+            t_row.add(values)
+
+        return t_row
 
 
 # row version
@@ -62,7 +84,8 @@ class Row:
 
 
 class Table_row:
-    def __init__(self, class_row, name_table='universal_table'):
+    def __init__(self, column_version, class_row, name_table='universal_table'):
+        self.column_version = column_version
         self.class_row = class_row
         self.name_table = name_table
         self.disk = DISK_STORAGE_ROW + self.name_table + '_row.txt'
@@ -99,6 +122,7 @@ class Table_row:
             list_row.append(dict_r)
 
         dict_dump = copy.deepcopy(self.__dict__)
+        del dict_dump['column_version']
         del dict_dump['class_row']
         del dict_dump['name_table']
         del dict_dump['disk']
@@ -108,4 +132,20 @@ class Table_row:
             json.dump(dict_dump, json_file)
 
     def to_column(self):
-        pass
+        t_column = self.column_version()
+        dict_table = copy.deepcopy(self.__dict__)
+        del dict_table['column_version']
+        del dict_table['class_row']
+        del dict_table['name_table']
+        del dict_table['disk']
+
+        list_row = dict_table['rows']
+
+        for r in list_row:
+            dict_r = r.__dict__
+            values = []
+            for attribute in dict_r.keys():
+                values.append(getattr(r, attribute))
+            t_column.add(values)
+
+        return t_column

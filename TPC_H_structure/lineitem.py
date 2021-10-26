@@ -21,7 +21,7 @@ class Lineitem_column(Table_column):
         self.shipmode = []
         self.comment = []
 
-        super().__init__('LINEITEM')
+        super().__init__(Lineitem_row, 'LINEITEM')
 
 
 class Lineitem(Row):
@@ -49,4 +49,4 @@ class Lineitem_row(Table_row):
     def __init__(self):
         self.primary_key_name = ['orderkey', 'linenumber']
         self.foreign_key_name = ['orderkey', 'partkey', 'suppkey']
-        super().__init__(Lineitem, 'LINEITEM')
+        super().__init__(Lineitem_column, Lineitem, 'LINEITEM')

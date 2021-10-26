@@ -14,7 +14,7 @@ class Customer_column(Table_column):
         self.mktsegment = []
         self.comment = []
 
-        super().__init__('CUSTOMER')
+        super().__init__(Customer_row, 'CUSTOMER')
 
 
 class Customer(Row):
@@ -35,4 +35,4 @@ class Customer_row(Table_row):
     def __init__(self):
         self.primary_key_name = ['custkey']
         self.foreign_key_name = ['nationkey']
-        super().__init__(Customer, 'CUSTOMER')
+        super().__init__(Customer_column, Customer, 'CUSTOMER')

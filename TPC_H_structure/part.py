@@ -14,7 +14,7 @@ class Part_column(Table_column):
         self.retailprice = []
         self.comment = []
 
-        super().__init__('PART')
+        super().__init__(Part_row, 'PART')
 
 
 class Part(Row):
@@ -36,4 +36,4 @@ class Part_row(Table_row):
         self.primary_key_name = ['partkey']
         self.foreign_key_name = []
 
-        super().__init__(Part, 'PART')
+        super().__init__(Part_column, Part, 'PART')

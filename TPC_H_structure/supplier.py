@@ -13,7 +13,7 @@ class Supplier_column(Table_column):
         self.acctbal = []
         self.comment = []
 
-        super().__init__('SUPPLIER')
+        super().__init__(Supplier_row, 'SUPPLIER')
 
 
 class Supplier(Row):
@@ -34,4 +34,4 @@ class Supplier_row(Table_row):
         self.primary_key_name = ['suppkey']
         self.foreign_key_name = ['nationkey']
 
-        super().__init__(Supplier, 'SUPPLIER')
+        super().__init__(Supplier_column, Supplier, 'SUPPLIER')

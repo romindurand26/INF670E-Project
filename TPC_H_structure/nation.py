@@ -10,7 +10,7 @@ class Nation_column(Table_column):
         self.regionkey = []
         self.comment = []
 
-        super().__init__('NATION')
+        super().__init__(Nation_row, 'NATION')
 
 
 class Nation(Row):
@@ -28,8 +28,4 @@ class Nation_row(Table_row):
         self.primary_key_name = ['nationkey']
         self.foreign_key_name = ['regionkey']
 
-        super().__init__(Nation, 'NATION')
-
-n = Nation_row()
-n.add([45, 'France', 5, 'hhygyguut'])
-n.dump_row()
+        super().__init__(Nation_column, Nation, 'NATION')

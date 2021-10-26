@@ -15,7 +15,7 @@ class Orders_column(Table_column):
         self.ship_priority = []
         self.comment = []
 
-        super().__init__('ORDERS')
+        super().__init__(Orders_row, 'ORDERS')
 
 
 class Orders(Row):
@@ -37,4 +37,4 @@ class Orders_row(Table_row):
     def __init__(self):
         self.primary_key_name = ['orderkey']
         self.foreign_key_name = ['custkey']
-        super().__init__(Orders, 'ORDERS')
+        super().__init__(Orders_column, Orders, 'ORDERS')
