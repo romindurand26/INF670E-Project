@@ -63,17 +63,23 @@ def row_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
     grouped_json = {}
     for row in table['rows']:
         if row[flattened[0]] not in grouped_json:
-            grouped_json[row[flattened[0]]] = np.zeros(len(apply_on_list))
+            grouped_json[row[flattened[0]]] = np.zeros(len(apply_on_list) + 1)
         for i in range(len(apply_on_list)):
             grouped_json[row[flattened[0]]][i] += float(row[flattened[i+1]])
+            grouped_json[row[flattened[0]]][-1] += 1
+
+    if operation == 'mean':
+        for k in grouped_json.keys():
+            for i in range(len(apply_on_list)):
+                grouped_json[k][i] = grouped_json[k][i] / grouped_json[k][-1]
 
     duration = time.time() - start
     print(f'Time spend for group by on row: {duration}')
     print(grouped_json)
 
 
-col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity', 'discount'], operation='mean')
-#row_group_by('LINEITEM_row.txt', ['suppkey'], ['quantity', 'discount'])
+#col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity', 'discount'], operation='mean')
+row_group_by('LINEITEM_row.txt', ['suppkey'], ['quantity', 'discount'], operation='mean')
 
 
 
