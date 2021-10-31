@@ -24,21 +24,24 @@ def col_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
 
     for iters in zip(*[table[u] for u in flattened]):
         if iters[0] not in grouped_json:
-            grouped_json[iters[0]] = np.zeros(len(apply_on_list))
+            grouped_json[iters[0]] = np.zeros(len(apply_on_list) + 1)
         for i in range(len(apply_on_list)):
             grouped_json[iters[0]][i] += float(iters[i+1])
+            grouped_json[iters[0]][-1] += 1
+
+    if operation == 'mean':
+        for k in grouped_json.keys():
+            for i in range(len(apply_on_list)):
+                grouped_json[k][i] = grouped_json[k][i] / grouped_json[k][-1]
 
     duration = time.time() - start
     print(f'Time spent for group by on columns: {duration}')
     print(grouped_json)
+
     '''grouped_df = pd.DataFrame(
         list(zip(list(grouped_json.keys()), list(grouped_json.values()))),
         columns=flattened)
     print(grouped_df)'''
-
-
-col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity', 'discount'])
-
 
 # TODO - group by for row storage
 
@@ -69,7 +72,8 @@ def row_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
     print(grouped_json)
 
 
-row_group_by('LINEITEM_row.txt', ['suppkey'], ['quantity', 'discount'])
+col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity', 'discount'], operation='mean')
+#row_group_by('LINEITEM_row.txt', ['suppkey'], ['quantity', 'discount'])
 
 
 
