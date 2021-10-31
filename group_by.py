@@ -7,6 +7,8 @@ import time
 import pandas as pd
 
 # --------------- GROUPING COL STORAGE DISK --------------------------
+
+
 def col_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
     start = time.time()
     file_path = os.path.join(os.getcwd(), 'disk_storage_column\\ ' + file_name)
@@ -41,8 +43,8 @@ def col_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
             # TODO min max functionality
             '''if operation == 'max':
                 if float(iters[i+1]) > max_json[iters[0]][i]:
-                    max_json[iters[0]][i] = float(iters[i+1])
-            grouped_json[iters[0]][-1] += 1'''
+                    max_json[iters[0]][i] = float(iters[i+1])'''
+            grouped_json[iters[0]][-1] += 1
 
     if operation == 'mean':
         for k in grouped_json.keys():
@@ -51,6 +53,7 @@ def col_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
 
     duration = time.time() - start
     print(f'Time spent for group by on columns: {duration}')
+    print(grouped_json)
     # TODO min max functionality
     '''if operation == 'max':
         print(max_json)
@@ -61,6 +64,7 @@ def col_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
         list(zip(list(grouped_json.keys()), list(grouped_json.values()))),
         columns=flattened)
     print(grouped_df)'''
+
 
 # --------------- GROUPING ROW STORAGE DISK --------------------------
 
