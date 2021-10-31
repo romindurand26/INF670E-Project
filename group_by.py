@@ -1,58 +1,38 @@
 import json
 import os
 import pandas as pd
+import numpy as np
+import random
+import string
 
-root_path = os.getcwd()
+def col_group_by(file_name, group_by_list, apply_on_list, operation = 'sum'):
+    file_path = os.path.join(os.getcwd(), 'disk_storage_column\\ ' + file_name)
+    with open(file_path, 'r') as json_file:
+        table = json.load(json_file)
 
-customer_col = os.path.join(root_path, 'disk_storage_column\\ CUSTOMER_column.txt')
-order_col = os.path.join(root_path, 'disk_storage_column\\ ORDERS_column.txt')
-lineItem_col = os.path.join(root_path, 'disk_storage_column\\ LINEITEM_column.txt')
+    flattened = [u for subitem in [group_by_list, apply_on_list] for u in subitem]
+    iters = []
 
-with open(customer_col, 'r') as json_file:
-    cust_col = json.load(json_file)
+    while len(iters) < len(flattened):
+        ran = random.choice(string.ascii_letters)
+        if ran not in iters:
+            iters.append(ran)
 
-with open(order_col, 'r') as json_file:
-    order_col = json.load(json_file)
+    grouped_json = {}
 
-with open(lineItem_col, 'r') as json_file:
-    lineItem_col = json.load(json_file)
-
-'''table = order_col
-group_by = 'custkey'
-apply_on = 'totalprice'
-
-grouped_json = {}
-for key, val in zip(table[group_by], table[apply_on]):
-    if key not in grouped_json:
-        grouped_json[key] = 0
-    grouped_json[key] += float(val)
-
-grouped_df = pd.DataFrame(
-    list(zip(list(grouped_json.keys()), list(grouped_json.values()))),
-    columns=[group_by, apply_on])
-print(grouped_df)'''
-
-table = lineItem_col
-group_by = ['suppkey']
-apply_on = ['quantity', 'discount']
-
-zip_l = [item for subitem in [group_by, apply_on] for item in subitem]
-#print((table[k] for k in zip_l))
-grouped_json = {}
-
-for key, val1, val2 in zip(table[k] for k in zip_l):
-    if key not in grouped_json:
-        grouped_json[key] = [0, 0]
-    for i in range(len(apply_on)):
-        grouped_json[key][i] += float(val1)
-        grouped_json[key][i] += float(val2)
-
-print(grouped_json)
+    for iters in zip(*[table[u] for u in flattened]):
+        if iters[0] not in grouped_json:
+            grouped_json[iters[0]] = np.zeros(len(apply_on_list))
+        for i in range(len(apply_on_list)):
+            grouped_json[iters[0]][i] += float(iters[i+1])
 
 
-'''grouped_df = pd.DataFrame(
-    list(zip(list(grouped_json.keys()), list(grouped_json.values()))),
-    columns=[group_by, apply_on])
-print(grouped_df)'''
+    print(grouped_json)
+    '''grouped_df = pd.DataFrame(
+        list(zip(list(grouped_json.keys()), list(grouped_json.values()))),
+        columns=flattened)
+    print(grouped_df)'''
+
+col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity', 'discount'])
 
 
