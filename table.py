@@ -1,6 +1,8 @@
 import json
 import copy
 import os
+import operator
+import matplotlib.pyplot as plt
 
 DISK_STORAGE_COLUMN = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
                       'analytics/INF670E-Project/disk_storage_column/ '
@@ -72,6 +74,162 @@ class Table_column:
             t_row.add(values)
 
         return t_row
+      
+     def show_table(self,max_col=0):
+        dict_table = copy.deepcopy(self.__dict__)
+        del dict_table['row_version']
+        del dict_table['name_table']
+        del dict_table['disk']
+        prim_key=dict_table['primary_key_name']
+        second_key=dict_table['foreign_key_name']
+        del dict_table['primary_key_name']
+        del dict_table['foreign_key_name']
+        r_lab=[]
+        cell_txt=[]
+        for attribute, val in zip(dict_table.keys(), dict_table.values()):
+            r_lab.append(attribute)
+            cell_txt.append(val)
+        fig, (ax1,ax2) = plt.subplots(2) 
+        ax1.set_axis_off() 
+        ax2.set_axis_off()
+        if max_col!=0:
+            for i in range(len(cell_txt)):
+                cell_txt[i]=cell_txt[i][:max_col]
+        idx=[]
+        k=0
+        for elem in cell_txt:
+            keep=False
+            for i in range(len(elem)):
+                if elem[i]!="":
+                    keep=True
+            if keep==False:
+                cell_txt.remove(elem)
+                idx.append(k)
+            k+=1
+        r_lab_res=copy.deepcopy(r_lab)
+        for elem in idx:
+            r_lab_res.remove(r_lab[elem])
+        table = ax1.table( 
+        cellText = cell_txt,  
+        rowLabels = r_lab_res,   
+        rowColours =["palegreen"] * len(r_lab),
+        rowLoc='center',  
+        cellLoc ='center',  
+        loc ='upper left')
+        table1 = ax2.table( 
+        cellText = [prim_key,second_key],  
+        rowLabels = ["Primary keys","Foreign keys"],   
+        rowColours =["red"] * 2,
+        colWidths=[0.75],
+        rowLoc='center',  
+        cellLoc ='center',  
+        loc ='upper right')         
+
+        
+        ax1.set_title(self.name_table+"_column", 
+            fontweight ="bold")
+        ax2.set_title("Primary keys and foreign keys", 
+            fontweight ="bold")
+        plt.show()
+
+    def projection(self,you,attributes=[]):
+        proj=copy.deepcopy(self.__dict__)
+        del proj['row_version']
+        del proj['name_table']
+        del proj['disk']
+        del proj['primary_key_name']
+        del proj['foreign_key_name']
+        keys=list(proj.keys())
+        nb_keys=len(keys)
+        key_del=[]
+        for key in proj.keys():
+            if key not in attributes:
+                key_del.append(key)
+        for key in key_del:
+            del proj[key]
+        addings=len(list(proj.values())[0])
+        adding=[]
+        for i in range(addings):
+            temp=["" for i in range(nb_keys)]
+            for j in range(len(attributes)):
+                pos=keys.index(attributes[j])
+                temp[pos]=proj[attributes[j]][i]
+            adding.append(temp)
+        for elem in adding:
+            you.add(elem)
+        locname=""
+        for att in attributes:
+            locname+=att+"_"
+        you.disk = DISK_STORAGE_COLUMN + self.name_table + '_projection_'+locname+'column.txt'
+        you.dump_column()
+
+    def select_table(self,you,conditions=("name",'==', "Algeria")):
+        dict_table = copy.deepcopy(self.__dict__)
+        del dict_table['row_version']
+        del dict_table['name_table']
+        del dict_table['disk']
+        del dict_table['primary_key_name']
+        del dict_table['foreign_key_name']
+
+        attribut=[]
+        valeur=[]
+
+        ops = {
+        '==': operator.eq,
+        '!=': operator.ne,
+        '<': operator.lt,
+        '>': operator.le,  # use operator.div for Python 2
+        '>=': operator.gt,
+        '<=': operator.ge,
+        }
+
+        for attribute, val in zip(dict_table.keys(), dict_table.values()):
+            attribut.append(attribute)
+            valeur.append(val)
+
+        conditionned_att=[]
+        valeur_t={}
+        vall_t=[]
+        attribut_t=[]
+        id=[]
+
+        for i in range(len(attribut)):
+            if attribut[i] == conditions[0]:
+                id.append(i)
+                attribut_t.append(attribut[i])
+                vall = []
+                index = []
+                for j in range(len(valeur[i])):
+                    if ops[conditions[1]](valeur[i][j], conditions[2]):
+                        vall.append(valeur[i][j])
+                        index.append(j)
+                vall_t.append(vall)
+
+        for i in range(len(attribut)):
+            vall1=[]
+            if attribut[i] != conditions[0]:
+                id.append(i)
+                attribut_t.append(attribut[i])
+                vall1=[valeur[i][j] for j in index]
+                vall_t.append(vall1)
+
+
+        att = [x for _, x in sorted(zip(id, attribut_t))]
+        val= [x for _, x in sorted(zip(id, vall_t))]
+
+        for i in range(len(att)):
+            valeur_t[att[i]] = val[i]
+        adding=[]
+        vals= list(valeur_t.values())
+        for i in range(len(vals[0])):
+            temp=[]
+            for elem in vals:
+                temp.append(elem[i])
+            adding.append(temp)
+        for elem in adding:
+            you.add(elem)
+        you.disk= DISK_STORAGE_COLUMN + 'select_tables_class.txt'
+        you.dump_column()
 
 
 # row version
