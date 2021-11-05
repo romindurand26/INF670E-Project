@@ -80,11 +80,7 @@ def col_group_by(file_name, group_by_list, apply_on_list, operation='sum', how=N
 
     flattened = [u for subitem in [group_by_list, apply_on_list] for u in subitem]
     iters = []
-    '''del table['primary_key_name']
-    del table['foreign_key_name']
-    df = pd.DataFrame(table)
-    print(df.suppkey)
-    print(np.max(df['quantity'][df['suppkey'] == '44']))'''
+
     while len(iters) < len(flattened):
         ran = random.choice(string.ascii_letters)
         if ran not in iters:
@@ -110,6 +106,7 @@ def col_group_by(file_name, group_by_list, apply_on_list, operation='sum', how=N
     duration = time.time() - start
     go_plot(grouped_df, group_by_list, apply_on_list, how)
     print(f'Time spent for group by on columns: {duration}')
+    return grouped_df
 
 
 # --------------- GROUPING ROW STORAGE DISK --------------------------
@@ -145,9 +142,10 @@ def row_group_by(file_name, group_by_list, apply_on_list, operation='sum', how=N
     duration = time.time() - start
     go_plot(grouped_df, group_by_list, apply_on_list, how)
     print(f'Time spend for group by on row: {duration}')
+    return grouped_df
 
 
-col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity'], operation='mean', how="DESC")
+col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity', 'discount'], operation='mean')
 row_group_by('LINEITEM_row.txt', ['suppkey'], ['quantity'], operation='mean', how="DESC")
 
 
