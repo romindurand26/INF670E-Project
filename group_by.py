@@ -54,7 +54,7 @@ def order(grouped_json, how, flattened):
         grouped_df[flattened[1:]] = pd.DataFrame(grouped_df.apply_on.tolist(), index=grouped_df.index)
         grouped_df = grouped_df.drop(columns=['apply_on'], axis=1)
 
-    print(grouped_df)
+    #print(grouped_df)
 
     return grouped_df
 
@@ -145,8 +145,8 @@ def row_group_by(file_name, group_by_list, apply_on_list, operation='sum', how=N
     return grouped_df
 
 
-col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity', 'discount'], operation='mean')
-row_group_by('LINEITEM_row.txt', ['suppkey'], ['quantity'], operation='mean', how="DESC")
+col_group_by('LINEITEM_column.txt', ['suppkey'], ['quantity'], operation='mean', how="ASC")
+row_group_by('LINEITEM_row.txt', ['suppkey'], ['quantity'], operation='mean', how="ASC")
 
 
 
