@@ -1,10 +1,11 @@
-from customer import Customer_column, Customer_row 
-from nation import Nation_column, Nation_row 
-from table import Table_column,jointure_table
+from TPC_H_structure.customer import Customer_column, Customer_row
+from TPC_H_structure.nation import Nation_column, Nation_row
+from table_multithread import Table_column, jointure_table
 import time
-DISK_STORAGE_COLUMN = 'C:/Users/louay/Desktop/3ATA/projet systems for big data analytics/disk_storage_column/ '
-DISK_STORAGE_ROW = 'C:/Users/louay/Desktop/3ATA/projet systems for big data analytics/disk_storage_row/ '
-
+DISK_STORAGE_COLUMN = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
+                      'analytics/INF670E-Project/disk_storage_column/ '
+DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
+                   'analytics/INF670E-Project/disk_storage_row/ '
 customer = Customer_column() 
 nation = Nation_column() 
 jointure = jointure_table()

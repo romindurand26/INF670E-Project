@@ -1,0 +1,1 @@
+{"primary_key_name": ["id"], "foreign_key_name": ["name"], "id": ["000"], "name": ["Oumaima"], "age": ["5"]}

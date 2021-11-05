@@ -35,6 +35,7 @@ if storage == 'row':
     customers = Customers_row()
 else:
     customers = Customers_column()
+    customers_proj = Customers_column()
 
 if show == 1:
     customers.add(["002", "Yasmine", "24"])
@@ -50,3 +51,8 @@ if storage == 'row':
     customers.dump_row()
 if storage == 'column':
     customers.dump_column()
+    customers.show_table()
+    #customers.projection(customers_proj, ["id", "name"])
+    #customers_proj.show_table()
+    customers.select_table(customers_proj, ['name', '==', 'Oumaima'])
+    customers_proj.show_table()
