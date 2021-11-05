@@ -28,8 +28,8 @@ class Customers_row(Table_row):
         super().__init__(Customers_column, Customer, 'customer')
 
 
-storage = 'row'
-show = 2
+storage = 'column'
+show = 1
 
 if storage == 'row':
     customers = Customers_row()
