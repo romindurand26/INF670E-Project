@@ -6,8 +6,10 @@ import concurrent.futures
 import time
 import matplotlib.pyplot as plt
 
-DISK_STORAGE_COLUMN = 'C:/Users/louay/Desktop/3ATA/projet systems for big data analytics/disk_storage_column/ '
-DISK_STORAGE_ROW = 'C:/Users/louay/Desktop/3ATA/projet systems for big data analytics/disk_storage_row/ '
+DISK_STORAGE_COLUMN = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
+                      'analytics/INF670E-Project/disk_storage_column/ '
+DISK_STORAGE_ROW = '/home/romin/Documents/M2 Data Science/Systems for big data ' \
+                   'analytics/INF670E-Project/disk_storage_row/ '
 
 
 # column version
